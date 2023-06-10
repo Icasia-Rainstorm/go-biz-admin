@@ -4,6 +4,20 @@
 - cd go-biz-admin
 - go mod init github.com/mousepotato/go-biz-admin
 
+- How to update Git and tag, with new changes:
+
+```
+git add .
+git commit -m "update"
+git push
+git tag xxx (e.g., 3_create_user_and_live_reload)
+git push origin --tags
+git tag (list all tags)
+```
+
+
+
+
 ## Gin hello world
 
 - go get -u github.com/gin-gonic/gin
