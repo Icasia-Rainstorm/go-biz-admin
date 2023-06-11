@@ -47,3 +47,8 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 
 ## register/login user with db and password encrypt
 
+- git tag: 4_register_login_password_encrypt
+
+## jwt, cookie, and logout
+
+- git tag: 5_jwt_cookie_logout
