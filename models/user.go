@@ -7,7 +7,7 @@ type User struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email" gorm:"unique"`
-	Password  []byte // `json:"-"` // will not return this field if add -
+	Password  []byte `json:"-"` // will not return this field if add -
 }
 
 func (user *User) SetPassword(password string) {

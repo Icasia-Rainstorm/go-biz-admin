@@ -5,7 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/database"
 	"github.com/mousepotato/go-biz-admin/models"
+	"github.com/mousepotato/go-biz-admin/util"
 	"net/http"
+	"strconv"
 )
 
 func Register(c *gin.Context) {
@@ -56,5 +58,35 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	token, err := util.GenerateJwt(strconv.Itoa(int(user.Id)))
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.SetCookie("jwt", token, 3600, "", "", false, true)
+
+	// c.JSON(http.StatusOK, token)
 	c.JSON(http.StatusOK, user)
+}
+
+func User(c *gin.Context) {
+	cookie, err := c.Cookie("jwt")
+	if err != nil {
+		fmt.Println("cookie not set")
+	}
+
+	id, _ := util.ParseJwt(cookie)
+
+	var user models.User
+
+	database.DB.Where("id = ?", id).First(&user)
+
+	c.JSON(http.StatusOK, user)
+}
+
+func Logout(c *gin.Context) {
+	c.SetCookie("jwt", "", 0, "", "", false, true)
+	c.JSON(http.StatusOK, gin.H{"message": "logout success"})
 }
