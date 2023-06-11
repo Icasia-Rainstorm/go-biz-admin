@@ -15,9 +15,6 @@ git push origin --tags
 git tag (list all tags)
 ```
 
-
-
-
 ## Gin hello world
 
 - go get -u github.com/gin-gonic/gin
@@ -28,13 +25,11 @@ git tag (list all tags)
 
 - add DB
 
-- git tag 1
+- git tag: 1_init_project
 
 ## Now create package for database and routes
 
-
-- git tag: 2
-
+- git tag: 2_refactor_with_package
 
 ## Now create and register user
 
@@ -45,4 +40,10 @@ git tag (list all tags)
 # binary will be $(go env GOPATH)/bin/air
 curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 ```
+
 - then start with `air`
+
+- git tag: 3_create_user_and_live_reload
+
+## register/login user with db and password encrypt
+
