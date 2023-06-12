@@ -3,13 +3,14 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/controllers"
+	"github.com/mousepotato/go-biz-admin/middlewares"
 	"net/http"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Define your handlers
+	// public handlers
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello World!")
 	})
@@ -17,11 +18,19 @@ func SetupRouter() *gin.Engine {
 		c.String(http.StatusOK, "pong")
 	})
 
-	// User Handlers
 	r.POST("/api/register", controllers.Register)
 	r.POST("/api/login", controllers.Login)
+
+	r.Use(middlewares.IsAuthenticated)
+
+	// User Handlers
 	r.GET("/api/user", controllers.User)
 	r.POST("/api/logout", controllers.Logout)
 
+	r.GET("/api/users", controllers.AllUsers)
+	r.POST("/api/users", controllers.CreateUser)
+	r.GET("/api/users/:id", controllers.GetUser)
+	r.PUT("/api/users/:id", controllers.UpdateUser)
+	r.DELETE("/api/users/:id", controllers.DeleteUser)
 	return r
 }

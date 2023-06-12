@@ -52,3 +52,7 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 ## jwt, cookie, and logout
 
 - git tag: 5_jwt_cookie_logout
+
+## user CRUD
+
+- git tag: 6_user_crud
