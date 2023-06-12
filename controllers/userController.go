@@ -11,7 +11,7 @@ import (
 func AllUsers(c *gin.Context) {
 	var users []models.User
 
-	database.DB.Find(&users)
+	database.DB.Preload("Role").Find(&users)
 
 	c.JSON(http.StatusOK, users)
 
@@ -40,7 +40,7 @@ func GetUser(c *gin.Context) {
 		Id: uint(id),
 	}
 
-	database.DB.Find(&user)
+	database.DB.Preload("Role").Find(&user)
 
 	c.JSON(http.StatusOK, user)
 }

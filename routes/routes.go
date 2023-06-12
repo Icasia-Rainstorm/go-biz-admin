@@ -32,5 +32,11 @@ func SetupRouter() *gin.Engine {
 	r.GET("/api/users/:id", controllers.GetUser)
 	r.PUT("/api/users/:id", controllers.UpdateUser)
 	r.DELETE("/api/users/:id", controllers.DeleteUser)
+
+	r.GET("/api/roles", controllers.AllRoles)
+	r.POST("/api/roles", controllers.CreateRole)
+	r.GET("/api/roles/:id", controllers.GetRole)
+	r.PUT("/api/roles/:id", controllers.UpdateRole)
+	r.DELETE("/api/roles/:id", controllers.DeleteRole)
 	return r
 }

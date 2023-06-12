@@ -27,6 +27,7 @@ func Register(c *gin.Context) {
 		FirstName: data["first_name"],
 		LastName:  data["last_name"],
 		Email:     data["email"],
+		RoleId:    1, // set as Admin
 	}
 
 	user.SetPassword(data["password"])
