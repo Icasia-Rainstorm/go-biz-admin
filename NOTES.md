@@ -60,3 +60,7 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 ## role CURD and update user with foreign keys
 
 - git tag: 7_role_crud_user_foreign_keys
+
+## role with permissions many to many mapping 
+
+- git tag: 8_permissions_and_many2many_mapping

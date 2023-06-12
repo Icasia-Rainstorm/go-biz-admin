@@ -38,5 +38,8 @@ func SetupRouter() *gin.Engine {
 	r.GET("/api/roles/:id", controllers.GetRole)
 	r.PUT("/api/roles/:id", controllers.UpdateRole)
 	r.DELETE("/api/roles/:id", controllers.DeleteRole)
+
+	r.GET("/api/permissions", controllers.AllPermissions)
+
 	return r
 }
