@@ -26,6 +26,8 @@ func SetupRouter() *gin.Engine {
 	// User Handlers
 	r.GET("/api/user", controllers.User)
 	r.POST("/api/logout", controllers.Logout)
+	r.PUT("/api/users/info", controllers.UpdateInfo)
+	r.PUT("/api/users/password", controllers.UpdatePassword)
 
 	r.GET("/api/users", controllers.AllUsers)
 	r.POST("/api/users", controllers.CreateUser)

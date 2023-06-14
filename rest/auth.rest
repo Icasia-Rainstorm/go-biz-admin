@@ -1,0 +1,25 @@
+POST http://localhost:8080/api/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "test1@gmail.com",
+  "password": "1234"
+}
+
+###
+PUT http://localhost:8080/api/users/info HTTP/1.1
+content-type: application/json
+
+{
+  "first_name": "John_first_name"
+}
+
+###
+
+PUT http://localhost:8080/api/users/password HTTP/1.1
+content-type: application/json
+
+{
+  "password": "1234",
+  "password_confirm": "1234"
+}

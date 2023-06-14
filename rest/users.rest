@@ -1,0 +1,16 @@
+// Login
+POST http://localhost:8080/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "test1@gmail.com",
+    "password": "123"
+}
+
+###
+
+### GET all users (default page 1)
+GET http://localhost:8080/api/users
+
+###
+GET http://localhost:8080/api/users?page=2

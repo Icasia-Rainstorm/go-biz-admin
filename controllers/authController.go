@@ -91,3 +91,54 @@ func Logout(c *gin.Context) {
 	c.SetCookie("jwt", "", 0, "", "", false, true)
 	c.JSON(http.StatusOK, gin.H{"message": "logout success"})
 }
+
+func UpdateInfo(c *gin.Context) {
+	var data map[string]string
+	if err := c.ShouldBindJSON(&data); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Input data is not JSON format"})
+		return
+	}
+	cookie, err := c.Cookie("jwt")
+	if err != nil {
+		fmt.Println("cookie not set")
+	}
+	id, _ := util.ParseJwt(cookie)
+	userId, _ := strconv.Atoi(id)
+
+	user := models.User{
+		Id:        uint(userId),
+		FirstName: data["first_name"],
+		LastName:  data["last_name"],
+		Email:     data["email"],
+	}
+	database.DB.Model(&user).Updates(user)
+
+	c.JSON(http.StatusOK, user)
+}
+
+func UpdatePassword(c *gin.Context) {
+	var data map[string]string
+	if err := c.ShouldBindJSON(&data); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Input data is not JSON format"})
+		return
+	}
+
+	if data["password"] != data["password_confirm"] {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "passwords do not match"})
+	}
+
+	cookie, err := c.Cookie("jwt")
+	if err != nil {
+		fmt.Println("cookie not set")
+	}
+
+	id, _ := util.ParseJwt(cookie)
+	userId, _ := strconv.Atoi(id)
+	user := models.User{
+		Id: uint(userId),
+	}
+	user.SetPassword(data["password"])
+	database.DB.Model(&user).Updates(user)
+
+	c.JSON(http.StatusOK, user)
+}
