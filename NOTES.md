@@ -74,5 +74,10 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 - git tag: 10_add_product_with_pagination
 
 ## refactor pagination and populate product
-- 
+
 - git tag: 11_refactor_pagination_and_populate_product
+
+
+## image upload
+
+- git tag: 12_image_upload

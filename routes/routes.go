@@ -49,5 +49,8 @@ func SetupRouter() *gin.Engine {
 	r.PUT("/api/products/:id", controllers.UpdateProduct)
 	r.DELETE("/api/products/:id", controllers.DeleteProduct)
 
+	r.POST("/api/upload", controllers.Upload)
+	r.Static("/api/uploads", "./uploads")
+
 	return r
 }
