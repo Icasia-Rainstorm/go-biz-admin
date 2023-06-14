@@ -1,0 +1,5 @@
+### GET all order (default page 1)
+GET http://localhost:8080/api/orders
+
+###
+GET http://localhost:8080/api/orders?page=2

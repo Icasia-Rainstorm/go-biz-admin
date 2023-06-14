@@ -12,7 +12,7 @@ type Entity interface {
 }
 
 func Paginate(db *gorm.DB, entity Entity, page int) gin.H {
-	limit := 15
+	limit := 5
 	offset := (page - 1) * limit
 
 	data := entity.Take(db, limit, offset)
