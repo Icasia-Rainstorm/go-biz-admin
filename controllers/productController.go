@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/database"
 	"github.com/mousepotato/go-biz-admin/models"
-	"math"
 	"net/http"
 	"strconv"
 )
@@ -12,23 +11,8 @@ import (
 func AllProducts(c *gin.Context) {
 
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit := 5
-	offset := (page - 1) * limit
-	var total int64
-
-	var products []models.Product
-
-	database.DB.Offset(offset).Limit(limit).Find(&products)
-	database.DB.Model(&models.Product{}).Count(&total)
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": products,
-		"meta": gin.H{
-			"total":     total,
-			"page":      page,
-			"last_page": math.Ceil(float64(int(total) / limit)),
-		},
-	})
+	ret := models.Paginate(database.DB, &models.Product{}, page)
+	c.JSON(http.StatusOK, ret)
 }
 
 func CreateProduct(c *gin.Context) {

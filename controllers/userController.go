@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/database"
 	"github.com/mousepotato/go-biz-admin/models"
-	"math"
 	"net/http"
 	"strconv"
 )
@@ -12,23 +11,9 @@ import (
 func AllUsers(c *gin.Context) {
 
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit := 5
-	offset := (page - 1) * limit
-	var total int64
+	ret := models.Paginate(database.DB, &models.User{}, page)
 
-	var users []models.User
-
-	database.DB.Preload("Role").Offset(offset).Limit(limit).Find(&users)
-	database.DB.Model(&models.User{}).Count(&total)
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": users,
-		"meta": gin.H{
-			"total":     total,
-			"page":      page,
-			"last_page": math.Ceil(float64(int(total) / limit)),
-		},
-	})
+	c.JSON(http.StatusOK, ret)
 }
 
 func CreateUser(c *gin.Context) {
