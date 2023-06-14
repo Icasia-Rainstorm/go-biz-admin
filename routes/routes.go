@@ -43,5 +43,11 @@ func SetupRouter() *gin.Engine {
 
 	r.GET("/api/permissions", controllers.AllPermissions)
 
+	r.GET("/api/products", controllers.AllProducts)
+	r.POST("/api/products", controllers.CreateProduct)
+	r.GET("/api/products/:id", controllers.GetProduct)
+	r.PUT("/api/products/:id", controllers.UpdateProduct)
+	r.DELETE("/api/products/:id", controllers.DeleteProduct)
+
 	return r
 }

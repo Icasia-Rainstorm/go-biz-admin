@@ -1,0 +1,28 @@
+### GET all products (default page 1)
+GET http://localhost:8080/api/products
+
+
+
+### POST product
+POST http://localhost:8080/api/products HTTP/1.1
+content-type: application/json
+
+{
+  "title": "test",
+  "description": "test products",
+  "image": "test image",
+  "price": 20
+}
+
+
+
+### Update product
+PUT http://localhost:8080/api/products/1 HTTP/1.1
+content-type: application/json
+
+{
+  "title": "test-new",
+  "description": "description",
+  "image": "test image",
+  "price": 25
+}

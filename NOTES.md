@@ -68,3 +68,7 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 ## mock user populate and pagination and update user profile, also use rest client
 
 - git tag: 9_user_populate_pagination_update_profile_rest_client
+
+## add product with pagination
+
+- git tag: 10_add_product_with_pagination
