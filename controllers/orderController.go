@@ -79,3 +79,21 @@ func CreateFile(filePath string) error {
 
 	return nil
 }
+
+type Sales struct {
+	Date string `json:"date"`
+	Sum  string `json:"sum"`
+}
+
+func Chart(c *gin.Context) {
+	var sales []Sales
+
+	database.DB.Raw(`
+		SELECT DATE_FORMAT(o.created_at, '%Y-%m-%d') as date, SUM(oi.price * oi.quantity) as sum
+		FROM orders o
+		JOIN order_items oi on o.id = oi.order_id
+		GROUP BY date
+	`).Scan(&sales)
+
+	c.JSON(http.StatusOK, sales)
+}

@@ -3,8 +3,8 @@ POST http://localhost:8080/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "test1@gmail.com",
-    "password": "1234"
+  "email": "test1@gmail.com",
+  "password": "1234"
 }
 
 ###
@@ -14,3 +14,16 @@ GET http://localhost:8080/api/users
 
 ###
 GET http://localhost:8080/api/users?page=2
+
+###
+GET http://localhost:8080/api/users/2 HTTP/1.1
+
+
+### Update user
+## user id 2 has role_id 3 (Viewer) which only has permission id 1 (view users) he can not update user info.
+PUT http://localhost:8080/api/users/2 HTTP/1.1
+content-type: application/json
+
+{
+  "first_name": "John_first_name"
+}

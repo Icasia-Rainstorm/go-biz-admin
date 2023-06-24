@@ -54,6 +54,6 @@ func SetupRouter() *gin.Engine {
 
 	r.GET("/api/orders", controllers.AllOrders)
 	r.POST("/api/export", controllers.Export)
-	// r.GET("/api/chart", controllers.Chart)
+	r.GET("/api/chart", controllers.Chart)
 	return r
 }

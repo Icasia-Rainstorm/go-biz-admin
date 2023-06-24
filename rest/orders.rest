@@ -3,3 +3,7 @@ GET http://localhost:8080/api/orders
 
 ###
 GET http://localhost:8080/api/orders?page=2
+
+
+###
+GET http://localhost:8080/api/chart

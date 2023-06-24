@@ -3,13 +3,19 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/database"
+	"github.com/mousepotato/go-biz-admin/middlewares"
 	"github.com/mousepotato/go-biz-admin/models"
 	"net/http"
 	"strconv"
 )
 
 func AllUsers(c *gin.Context) {
-
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized"},
+		)
+		return
+	}
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	ret := models.Paginate(database.DB, &models.User{}, page)
 
@@ -17,6 +23,13 @@ func AllUsers(c *gin.Context) {
 }
 
 func CreateUser(c *gin.Context) {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized"},
+		)
+		return
+	}
+
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest,
@@ -45,6 +58,12 @@ func GetUser(c *gin.Context) {
 }
 
 func UpdateUser(c *gin.Context) {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized"},
+		)
+		return
+	}
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
 
 	user := models.User{

@@ -84,3 +84,7 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 
 ## orders and export
 - git tag: 13_orders_order_item_export
+
+## order chart and permissions
+
+- git tag: 14_order_chart_and_api_permissions
