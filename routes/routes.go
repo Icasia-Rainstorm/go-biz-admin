@@ -1,14 +1,28 @@
 package routes
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/controllers"
 	"github.com/mousepotato/go-biz-admin/middlewares"
 	"net/http"
+	"time"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:4200", "http://localhost:4201"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Content-Type", "Content-Length", "Accept-Encoding", "Authorization", "Cache-Control"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		// AllowOriginFunc: func(origin string) bool {
+		// 	return origin == "http://localhost:4200.com"
+		// },
+		MaxAge: 12 * time.Hour,
+	}))
 
 	// public handlers
 	r.GET("/", func(c *gin.Context) {
