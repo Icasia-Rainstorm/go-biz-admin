@@ -23,7 +23,7 @@ func Paginate(db *gorm.DB, entity Entity, page int) gin.H {
 		"meta": gin.H{
 			"total":     total,
 			"page":      page,
-			"last_page": math.Ceil(float64(int(total) / limit)),
+			"last_page": math.Ceil(float64(total) / float64(limit)),
 		},
 	}
 }
