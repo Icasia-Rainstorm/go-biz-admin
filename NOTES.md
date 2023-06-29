@@ -61,7 +61,7 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 
 - git tag: 7_role_crud_user_foreign_keys
 
-## role with permissions many to many mapping 
+## role with permissions many to many mapping
 
 - git tag: 8_permissions_and_many2many_mapping
 
@@ -77,17 +77,22 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 
 - git tag: 11_refactor_pagination_and_populate_product
 
-
 ## image upload
 
 - git tag: 12_image_upload
 
 ## orders and export
+
 - git tag: 13_orders_order_item_export
 
 ## order chart and permissions
 
 - git tag: 14_order_chart_and_api_permissions
 
-## cors 
+## cors
+
 - git tag: 15_cors
+
+## role api fix
+
+- git tag 16_role_api_fix
