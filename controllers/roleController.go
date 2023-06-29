@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mousepotato/go-biz-admin/database"
 	"github.com/mousepotato/go-biz-admin/models"
@@ -24,24 +26,29 @@ type RoleCreateDTO struct {
 }
 
 func CreateRole(c *gin.Context) {
-	var roleDto RoleCreateDTO
+	var roleDto map[string]interface{}
 
-	if err := c.ShouldBindJSON(&roleDto); err != nil {
+	val, _ := c.GetRawData()
+	fmt.Println(string(val))
+	err := json.Unmarshal(val, &roleDto)
+	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest,
-			gin.H{"message": "invalid role JSON file"},
+			gin.H{"message": "input role data unmarshal error"},
 		)
-		return
 	}
 
-	permissions := make([]models.Permission, len(roleDto.Permissions))
+	list := roleDto["permissions"].([]interface{})
+	permissions := make([]models.Permission, len(list))
 
-	for idx, permissionId := range roleDto.Permissions {
-		id, _ := strconv.Atoi(permissionId)
-		permissions[idx] = models.Permission{Id: uint(id)}
+	for idx, permissionId := range list {
+		id, _ := permissionId.(float64)
+		permissions[idx] = models.Permission{
+			Id: uint(id),
+		}
 	}
 
 	role := models.Role{
-		Name:        roleDto.Name,
+		Name:        roleDto["name"].(string),
 		Permissions: permissions,
 	}
 	database.DB.Create(&role)
@@ -63,27 +70,32 @@ func GetRole(c *gin.Context) {
 
 func UpdateRole(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
-	var roleDto RoleCreateDTO
+	var roleDto map[string]interface{}
 
-	if err := c.ShouldBindJSON(&roleDto); err != nil {
+	val, _ := c.GetRawData()
+	fmt.Println(string(val))
+	err := json.Unmarshal(val, &roleDto)
+	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest,
-			gin.H{"message": "invalid role JSON file"},
+			gin.H{"message": "input role data unmarshal error"},
 		)
-		return
+	}
+	list := roleDto["permissions"].([]interface{})
+	permissions := make([]models.Permission, len(list))
+
+	for idx, permissionId := range list {
+		id, _ := permissionId.(float64)
+		permissions[idx] = models.Permission{
+			Id: uint(id),
+		}
 	}
 
-	permissions := make([]models.Permission, len(roleDto.Permissions))
-
-	for idx, permissionId := range roleDto.Permissions {
-		id, _ := strconv.Atoi(permissionId)
-		permissions[idx] = models.Permission{Id: uint(id)}
-	}
 	var result struct{} // var result interface{} this will throw error as no zero value!
 	database.DB.Table("role_permissions").Where("role_id", id).Delete(&result)
 
 	role := models.Role{
 		Id:          uint(id),
-		Name:        roleDto.Name,
+		Name:        roleDto["name"].(string),
 		Permissions: permissions,
 	}
 
@@ -98,6 +110,9 @@ func DeleteRole(c *gin.Context) {
 	role := models.Role{
 		Id: uint(id),
 	}
+
+	var result struct{}
+	database.DB.Table("role_permissions").Where("role_id", id).Delete(&result)
 
 	database.DB.Delete(&role)
 	c.JSON(http.StatusOK, gin.H{"message": "role delete successfully"})

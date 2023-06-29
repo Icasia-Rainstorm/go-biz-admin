@@ -1,0 +1,27 @@
+### GET all order (default page 1)
+GET http://localhost:8080/api/roles
+
+###
+POST http://localhost:8080/api/roles HTTP/1.1
+content-type: application/json
+
+{
+  "name": "test",
+  "permissions": [
+    1,
+    2,
+    3
+  ]
+}
+
+###
+PUT http://localhost:8080/api/roles/48 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "12",
+  "permissions": [
+    2,
+    3
+  ]
+}
